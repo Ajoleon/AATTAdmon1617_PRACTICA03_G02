@@ -237,7 +237,7 @@ public class ObtenerDatos {
                 }      
         }while(flag==false);
         flag = false;
-        do {
+       /* do {
                 t[0] = datos[i];
                 if(t[0]==12){
                      t[0] = datos[i+1];
@@ -254,7 +254,7 @@ public class ObtenerDatos {
                 }else{
                     i++; 
                 }      
-        }while(flag==false);
+        }while(flag==false);*/
         System.out.println(dni);
         System.out.println(nombre);
        return null;
