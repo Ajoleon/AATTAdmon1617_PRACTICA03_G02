@@ -213,7 +213,7 @@ public class ObtenerDatos {
         int  i = 0;
         String dni = "";
         byte[] t = new byte[1];
-       
+        String nombre ="";
         boolean flag = false;
         // DNI: empieza tras un byte de valor 9.
         //nombre: 146 41 65
@@ -236,7 +236,27 @@ public class ObtenerDatos {
                     i++; 
                 }      
         }while(flag==false);
+        flag = false;
+        do {
+                t[0] = datos[i];
+                if(t[0]==12){
+                     t[0] = datos[i+1];
+                     if(t[0]==6){
+                        for(int j=1 ; j<=9;j++){
+                            byte[] s = new byte[1];
+                            s[0] = datos[i+j+1];
+                            nombre = nombre + new String(s);
+                        }
+                        flag = true;
+                    }else{
+                         i++;
+                     }
+                }else{
+                    i++; 
+                }      
+        }while(flag==false);
         System.out.println(dni);
+        System.out.println(nombre);
        return null;
     }
 }
