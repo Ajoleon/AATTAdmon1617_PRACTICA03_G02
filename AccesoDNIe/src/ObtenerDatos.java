@@ -209,7 +209,34 @@ public class ObtenerDatos {
      * @return 
      */
     private Usuario leerDatosUsuario(byte[] datos) {
-        
+        Usuario user = new Usuario("","","","");
+        int  i = 0;
+        String dni = "";
+        byte[] t = new byte[1];
+       
+        boolean flag = false;
+        // DNI: empieza tras un byte de valor 9.
+        //nombre: 146 41 65
+        //apellidos y nombre : 169 4C 76 y 174 53 83 hasta 194 45  69
+        do {
+                t[0] = datos[i];
+                if(t[0]==19){
+                     t[0] = datos[i+1];
+                     if(t[0]==9){
+                        for(int j=1 ; j<=9;j++){
+                            byte[] s = new byte[1];
+                            s[0] = datos[i+j+1];
+                            dni = dni + new String(s);
+                        }
+                        flag = true;
+                    }else{
+                         i++;
+                     }
+                }else{
+                    i++; 
+                }      
+        }while(flag==false);
+        System.out.println(dni);
        return null;
     }
 }
