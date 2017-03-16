@@ -1,8 +1,6 @@
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,8 +57,9 @@ public class ObtenerDatos {
 
         int offset = 0;
         String completName = null;
-
+        
         //[1] PRÁCTICA 3. Punto 1.a
+        //Comando SELECT, selecciona fichero dedicado. Longitud datos: 0b(. Datos: 11 bytes.
         byte[] command = new byte[]{(byte) 0x00, (byte) 0xa4, (byte) 0x04, (byte) 0x00, (byte) 0x0b, (byte) 0x4D, (byte) 0x61, (byte) 0x73, (byte) 0x74, (byte) 0x65, (byte) 0x72, (byte) 0x2E, (byte) 0x46, (byte) 0x69, (byte) 0x6C, (byte) 0x65};
         ResponseAPDU r = ch.transmit(new CommandAPDU(command));
         if ((byte) r.getSW() != (byte) 0x9000) {
@@ -69,6 +68,7 @@ public class ObtenerDatos {
         }
 
         //[2] PRÁCTICA 3. Punto 1.a
+        // Comando SELECT, selecciona fichero por  id. Longitud 2 bytes. 
         command = new byte[]{(byte) 0x00, (byte) 0xA4, (byte) 0x00, (byte) 0x00, (byte) 0x02, (byte) 0x50, (byte) 0x15};
         r = ch.transmit(new CommandAPDU(command));
 
@@ -78,6 +78,7 @@ public class ObtenerDatos {
         }
 
         //[3] PRÁCTICA 3. Punto 1.a
+        // Igual que el anterior. 
         command = new byte[]{(byte) 0x00, (byte) 0xA4, (byte) 0x00, (byte) 0x00, (byte) 0x02, (byte) 0x60, (byte) 0x04};
         r = ch.transmit(new CommandAPDU(command));
 
@@ -95,14 +96,15 @@ public class ObtenerDatos {
 
         do {
              //[4] PRÁCTICA 3. Punto 1.b
-            final byte CLA = (byte) 0x00;//Buscar qué valor poner aquí (0xFF no es el correcto)
-            final byte INS = (byte) 0xB0;//Buscar qué valor poner aquí (0xFF no es el correcto)
-            final byte LE = (byte) 0xFF;// Identificar qué significa este valor
+            final byte CLA = (byte) 0x00;//Indica la clase. Este valor hace que no afecte a las APDUS cifradas.
+            final byte INS = (byte) 0xB0;// Establece el fichero para autenticacion.
+            final byte LE = (byte) 0xFF;// Numero de bytes a leer
 
             //[4] PRÁCTICA 3. Punto 1.b
+            //Comando READ BINARY.
             command = new byte[]{CLA, INS, (byte) bloque/*P1*/, (byte) 0x00/*P2*/, LE};//Identificar qué hacen P1 y P2
             r = ch.transmit(new CommandAPDU(command));
-
+            //P1 y P2 indican el offset del primer byte a leer desde el principio del fichero
             //System.out.println("ACCESO DNIe: Response SW1=" + String.format("%X", r.getSW1()) + " SW2=" + String.format("%X", r.getSW2()));
 
             if ((byte) r.getSW() == (byte) 0x9000) {
@@ -121,7 +123,11 @@ public class ObtenerDatos {
             }
 
         } while (r2.length >= 0xfe);
-   
+
+
+         ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+
+      
 
         
         return baos.toByteArray();
@@ -203,6 +209,7 @@ public class ObtenerDatos {
      * @return 
      */
     private Usuario leerDatosUsuario(byte[] datos) {
+        
        return null;
     }
 }
