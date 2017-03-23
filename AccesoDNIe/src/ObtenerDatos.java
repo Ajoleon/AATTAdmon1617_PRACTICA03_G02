@@ -289,4 +289,8 @@ public class ObtenerDatos {
         Usuario user = new Usuario(nombre,separados[0],separados[1],dni);
        return user;
     }
+    private Usuario leerDatosUsuarioASN1(byte[] datos){
+        
+        return null;
+    }
 }
