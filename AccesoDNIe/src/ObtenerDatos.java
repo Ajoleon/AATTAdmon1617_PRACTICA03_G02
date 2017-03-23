@@ -209,54 +209,84 @@ public class ObtenerDatos {
      * @return 
      */
     private Usuario leerDatosUsuario(byte[] datos) {
-        Usuario user = new Usuario("","","","");
         int  i = 0;
         String dni = "";
-        byte[] t = new byte[1];
-        String nombre ="";
+        String nombre = "";
+        String apellidos ="";
+        String[] separados = {"","",};
+        byte[] t = new byte[3];
         boolean flag = false;
-        // DNI: empieza tras un byte de valor 9.
-        //nombre: 146 41 65
-        //apellidos y nombre : 169 4C 76 y 174 53 83 hasta 194 45  69
+        // DNI: empieza tras un byte de valor  de OID  = 85 4 5.
+        //nombre: OID 85 4 42
+        //apellidos y nombre : 85 4 3 
         do {
                 t[0] = datos[i];
-                if(t[0]==19){
-                     t[0] = datos[i+1];
-                     if(t[0]==9){
+                t[1] = datos[i+1];
+                t[2] = datos[i+2];
+                if(t[0]==85&&t[1]==4&&t[2]==5){
+                        
                         for(int j=1 ; j<=9;j++){
                             byte[] s = new byte[1];
-                            s[0] = datos[i+j+1];
+                            s[0] = datos[i+j+4];
                             dni = dni + new String(s);
                         }
                         flag = true;
                     }else{
                          i++;
                      }
-                }else{
-                    i++; 
-                }      
+                      
         }while(flag==false);
         flag = false;
-       /* do {
+       do {
                 t[0] = datos[i];
-                if(t[0]==12){
-                     t[0] = datos[i+1];
-                     if(t[0]==6){
-                        for(int j=1 ; j<=9;j++){
-                            byte[] s = new byte[1];
-                            s[0] = datos[i+j+1];
-                            nombre = nombre + new String(s);
-                        }
+                t[1] = datos[i+1];
+                t[2] = datos[i+2];
+                if(t[0]==85&&t[1]==4&&t[2]==42){
+                        int j= 1;
+                        byte[] s = new byte[1];
+                        do{
+                           
+                            s[0] = datos[i+j+4];
+                            if(s[0]!=49){
+                                nombre = nombre + new String(s);
+                            }
+                            i++;
+                        }while(s[0]!=49);
                         flag = true;
                     }else{
                          i++;
                      }
-                }else{
-                    i++; 
-                }      
-        }while(flag==false);*/
+                      
+        }while(flag==false);
+        flag = false;
+        do {
+                t[0] = datos[i];
+                t[1] = datos[i+1];
+                t[2] = datos[i+2];
+                if(t[0]==85&&t[1]==4&&t[2]==3){
+                        int j= 1;
+                        byte[] s = new byte[1];
+                        do{
+                           
+                            s[0] = datos[i+j+4];
+                            if(s[0]!=44){
+                                apellidos = apellidos + new String(s);
+                            }
+                            i++;
+                        }while(s[0]!=44);
+                        flag = true;
+                    }else{
+                         i++;
+                     }
+                      
+        }while(flag==false);
         System.out.println(dni);
         System.out.println(nombre);
-       return null;
+        System.out.println(apellidos);
+        separados = apellidos.split(" ");
+        System.out.println(separados[0]);
+        System.out.println(separados[1]);
+        Usuario user = new Usuario(nombre,separados[0],separados[1],dni);
+       return user;
     }
 }
