@@ -290,7 +290,7 @@ public class ObtenerDatos {
        return user;
     }
     private Usuario leerDatosUsuarioASN1(byte[] datos){
-        
+        //
         return null;
     }
 }

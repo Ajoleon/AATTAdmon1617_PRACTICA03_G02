@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
  * @author Juan Carlos Cuevas Martínez
  */
 public class Main {
+    public final static String  direccion = "10.82.202.204:8081";
     /**
      * @param args the command line arguments
      */
@@ -31,26 +32,26 @@ public class Main {
         if(user!=null)
             System.out.println("usuario: "+user.toString());
             String usuario = user.getNombre().charAt(0)+user.getApellido1()+user.getApellido2().charAt(0);
-            peticion("10.82.202.204:8081",usuario,user.getNif());
+            peticion(direccion,usuario,user.getNif());
         //TAREA 3. AUTENTICAR EL CLIENTE CON EL SERVIDOR
         
     }
     public static void peticion(String ip,String user, String clave) throws MalformedURLException, ProtocolException, IOException{
         String urlParameters  = "usuario="+user+"&clave="+clave;
-        byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
-        int    postDataLength = postData.length;
-        String request        = "http://"+ip+"/servidor/login";
-        URL    url            = new URL( request );
+        byte[] datos = urlParameters.getBytes( StandardCharsets.UTF_8 );
+        int longitud = datos.length;
+        String request = "http://"+ip+"/servidor/login";
+        URL url = new URL( request );
         HttpURLConnection conn= (HttpURLConnection) url.openConnection();           
         conn.setDoOutput( true );
         conn.setInstanceFollowRedirects( false );
         conn.setRequestMethod( "POST" );
         conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
         conn.setRequestProperty( "charset", "utf-8");
-        conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+        conn.setRequestProperty( "Content-Length", Integer.toString(longitud));
         conn.setUseCaches( false );
         try( DataOutputStream wr = new DataOutputStream( conn.getOutputStream())) {
-            wr.write( postData );
+            wr.write(datos);
         }
         Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
 
