@@ -19,6 +19,10 @@ import java.nio.charset.StandardCharsets;
  */
 public class Main {
     public final static String  direccion = "10.82.202.204:8081";
+    public final static String[] resultados = {"OK","Error"};
+    public final static String[] mensajes = {"Autenticación Correcta.","Error en la autenticación, usuario inválido.",
+                                            "Error de conexión.", "Error en la url."};
+    
     /**
      * @param args the command line arguments
      */
@@ -31,34 +35,56 @@ public class Main {
         Usuario user = od.LeerNIF();
         if(user!=null)
             System.out.println("usuario: "+user.toString());
-            String usuario = user.getNombre().charAt(0)+user.getApellido1()+user.getApellido2().charAt(0);
-            peticion(direccion,usuario,user.getNif());
+            String usuario = user.generaruser();
+            System.out.println(usuario);
+            String resultado = peticion(direccion,usuario,user.getNif());
+            if(resultado.equals(resultados[0])){
+                System.out.println(mensajes[0]);
+            }else if(resultado.equals(resultados[1])){
+                System.out.println(mensajes[1]);
+            }else{
+                System.out.println(resultado);
+            }
         //TAREA 3. AUTENTICAR EL CLIENTE CON EL SERVIDOR
         
     }
-    public static void peticion(String ip,String user, String clave) throws MalformedURLException, ProtocolException, IOException{
+    public static String peticion(String ip,String user, String clave) throws MalformedURLException, ProtocolException, IOException{
+        String inputline= "";
+        String [] salida = null;
         String urlParameters  = "usuario="+user+"&clave="+clave;
         byte[] datos = urlParameters.getBytes( StandardCharsets.UTF_8 );
         int longitud = datos.length;
-        String request = "http://"+ip+"/servidor/login";
-        URL url = new URL( request );
-        HttpURLConnection conn= (HttpURLConnection) url.openConnection();           
-        conn.setDoOutput( true );
-        conn.setInstanceFollowRedirects( false );
-        conn.setRequestMethod( "POST" );
-        conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
-        conn.setRequestProperty( "charset", "utf-8");
-        conn.setRequestProperty( "Content-Length", Integer.toString(longitud));
-        conn.setUseCaches( false );
-        try( DataOutputStream wr = new DataOutputStream( conn.getOutputStream())) {
-            wr.write(datos);
+        String direccion = "http://"+ip+"/servidor/login";
+        try{
+            URL url = new URL(direccion);
+            try{
+                HttpURLConnection conn= (HttpURLConnection) url.openConnection();           
+                conn.setDoOutput(true);
+                conn.setConnectTimeout(2000);
+                conn.setInstanceFollowRedirects( false );
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); 
+                conn.setRequestProperty("charset", "utf-8");
+                conn.setRequestProperty("Content-Length", Integer.toString(longitud));
+                conn.setUseCaches(false);
+                try( DataOutputStream wr = new DataOutputStream( conn.getOutputStream())) {
+                    wr.write(datos);
+                }
+                Reader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                BufferedReader in = new BufferedReader(br);
+                while ((inputline = in.readLine()) != null) {
+                        if(inputline.startsWith("Resultado=")){
+                            salida = inputline.split("=");
+                        }
+                    }
+                return salida[1];
+            }catch(IOException e){
+            return mensajes[2];
         }
-        Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        }catch(MalformedURLException u){
+            return mensajes[3];
+        }
 
-        for (int c; (c = in.read()) >= 0;)
-            System.out.print((char)c);
-    }
-
-        
+    }     
     
 }

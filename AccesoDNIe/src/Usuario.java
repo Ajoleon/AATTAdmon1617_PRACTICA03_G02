@@ -51,5 +51,7 @@ public class Usuario {
     public void setNif(String nif) {
         this.nif = nif;
     }
-          
+    public String generaruser(){
+        return this.getNombre().charAt(0)+this.getApellido1()+this.getApellido2().charAt(0);
+    }      
 }
