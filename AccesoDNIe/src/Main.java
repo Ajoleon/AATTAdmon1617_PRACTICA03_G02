@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
  * @author Juan Carlos Cuevas Martínez
  */
 public class Main {
-    public final static String  direccion = "10.82.202.204:8081";
+    
     public final static String[] resultados = {"OK","Error"};
     public final static String[] mensajes = {"Autenticación Correcta.","Error en la autenticación, usuario inválido.",
                                             "Error de conexión.", "Error en la url."};
@@ -26,7 +26,7 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws Exception{
+    public static String main(String direccion) throws Exception{
         ByteArrayInputStream bais=null;
         
         //TAREA 2. Conseguir que el método LeerNIF de ObtenerDatos devuelva el 
@@ -40,10 +40,13 @@ public class Main {
             String resultado = peticion(direccion,usuario,user.getNif());
             if(resultado.equals(resultados[0])){
                 System.out.println(mensajes[0]);
+                return mensajes[0];
             }else if(resultado.equals(resultados[1])){
                 System.out.println(mensajes[1]);
+                return mensajes[1];
             }else{
                 System.out.println(resultado);
+                return resultado;
             }
         //TAREA 3. AUTENTICAR EL CLIENTE CON EL SERVIDOR
         

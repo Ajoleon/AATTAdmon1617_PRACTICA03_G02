@@ -10,6 +10,7 @@ import javax.smartcardio.*;
  * La clase ObtenerDatos implementa cuatro métodos públicos que permiten obtener
  * determinados datos de los certificados de tarjetas DNIe, Izenpe y Ona.
  *
+ * 
  * @author tbc
  */
 public class ObtenerDatos {
@@ -289,6 +290,11 @@ public class ObtenerDatos {
         Usuario user = new Usuario(nombre,separados[0],separados[1],dni);
        return user;
     }
+    /**
+     * 
+     * @param datos
+     * @return 
+     */
     private Usuario leerDatosUsuarioASN1(byte[] datos){
         //
         return null;
