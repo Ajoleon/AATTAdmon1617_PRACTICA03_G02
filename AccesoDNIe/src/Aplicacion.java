@@ -11,10 +11,12 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author antonioleon
+ * @author Pablo Castillo Segura y Antonio José León Sánchez
  */
 public class Aplicacion extends javax.swing.JFrame {
+    //Configuración inicial de la configuración
     public  String  direccion = "10.82.202.204:8081";
+    
     /**
      * Creates new form Aplicacion
      */
@@ -76,19 +78,23 @@ public class Aplicacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        //Botón de inicio de autenticación con el servidor
         
         String resultado = "";
+        
         try {
+            //Inicio código del main
             resultado = Main.main(direccion);
-           JOptionPane.showMessageDialog(null, resultado, "Respuesta", JOptionPane.INFORMATION_MESSAGE);
+            //Muestro resultado en ventana de información
+            JOptionPane.showMessageDialog(null, resultado, "Respuesta", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             Logger.getLogger(Aplicacion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        //Ventada para configurar la dirección del servidor
+        //Muestra la actual, y recoge la especificada
         direccion = JOptionPane.showInputDialog(null, "Dirección del servidor remoto.", direccion);
     }//GEN-LAST:event_jButton2ActionPerformed
 

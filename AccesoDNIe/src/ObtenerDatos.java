@@ -9,7 +9,6 @@ import javax.smartcardio.*;
 /**
  * La clase ObtenerDatos implementa cuatro métodos públicos que permiten obtener
  * determinados datos de los certificados de tarjetas DNIe, Izenpe y Ona.
- *
  * 
  * @author tbc
  */
@@ -27,12 +26,19 @@ public class ObtenerDatos {
     public ObtenerDatos() {
     }
 
+    /**
+     * Método para leer DNIe
+     * 
+     * @return Usuario leído del DNIe
+     */
     public Usuario LeerNIF() {
 
         Usuario user = null;
         byte[] datos=null;
+        
         try {
             Card c = ConexionTarjeta();
+            //Si existe la tarjeta
             if (c == null) {
                 throw new Exception("ACCESO DNIe: No se ha encontrado ninguna tarjeta");
             }
@@ -41,7 +47,9 @@ public class ObtenerDatos {
 
             if (esDNIe(atr)) {
                 datos = leerCertificado(ch);
+                //Si existen datos del certificado
                 if(datos!=null)
+                    //Método que devuelve el objeto usuario relleno con los datos leídos
                     user = leerDatosUsuario(datos);
             }
             c.disconnect(false);
@@ -207,7 +215,7 @@ public class ObtenerDatos {
      *   - apellidos
      *   - NIF
      * @param datos
-     * @return 
+     * @return Objeto de la clase Usuario
      */
     private Usuario leerDatosUsuario(byte[] datos) {
         int  i = 0;
@@ -217,60 +225,71 @@ public class ObtenerDatos {
         String[] separados = {"","",};
         byte[] t = new byte[3];
         boolean flag = false;
+        
         // DNI: empieza tras un byte de valor  de OID  = 85 4 5.
         //nombre: OID 85 4 42
         //apellidos y nombre : 85 4 3 
         do {
-                t[0] = datos[i];
-                t[1] = datos[i+1];
-                t[2] = datos[i+2];
-                if(t[0]==85&&t[1]==4&&t[2]==5){
-                        
-                        for(int j=1 ; j<=9;j++){
-                            byte[] s = new byte[1];
-                            s[0] = datos[i+j+4];
-                            dni = dni + new String(s);
-                        }
-                        flag = true;
-                    }else{
-                         i++;
-                     }
+            t[0] = datos[i];
+            t[1] = datos[i+1];
+            t[2] = datos[i+2];
+            
+            //Voy avanzando en los datos hasta encontrar OID = 85 4 5 (DNI)
+            if(t[0]==85&&t[1]==4&&t[2]==5){
+
+                for(int j=1 ; j<=9;j++){
+                    byte[] s = new byte[1];
+                    s[0] = datos[i+j+4];
+                    //Voy concatenando las cifras del DNI
+                    dni = dni + new String(s);
+                }
+                flag = true;
+                
+            }else{
+                i++;
+            }
                       
         }while(flag==false);
         flag = false;
-       do {
-                t[0] = datos[i];
-                t[1] = datos[i+1];
-                t[2] = datos[i+2];
-                if(t[0]==85&&t[1]==4&&t[2]==42){
-                        int j= 1;
-                        byte[] s = new byte[1];
-                        do{
-                           
-                            s[0] = datos[i+j+4];
-                            if(s[0]!=49){
-                                nombre = nombre + new String(s);
-                            }
-                            i++;
-                        }while(s[0]!=49);
-                        flag = true;
-                    }else{
-                         i++;
-                     }
+        
+        do {
+            t[0] = datos[i];
+            t[1] = datos[i+1];
+            t[2] = datos[i+2];
+            
+            //Voy avanzando en los datos hasta encontrar OID = 85 4 42 (nombre)
+            if(t[0]==85&&t[1]==4&&t[2]==42){
+                int j= 1;
+                byte[] s = new byte[1];
+                do{
+                    s[0] = datos[i+j+4];
+                    if(s[0]!=49){
+                        //Concateno en la variable nombre
+                        nombre = nombre + new String(s);
+                    }
+                    i++;
+                }while(s[0]!=49);
+                flag = true;
+            }else{
+                i++;
+            }
                       
         }while(flag==false);
         flag = false;
+        
         do {
                 t[0] = datos[i];
                 t[1] = datos[i+1];
                 t[2] = datos[i+2];
+                
+                //Voy avanzando en los datos hasta encontrar OID = 85 4 3 (apellidos)
                 if(t[0]==85&&t[1]==4&&t[2]==3){
                         int j= 1;
                         byte[] s = new byte[1];
                         do{
-                           
                             s[0] = datos[i+j+4];
                             if(s[0]!=44){
+                                //Concateno en la variable apellidos
                                 apellidos = apellidos + new String(s);
                             }
                             i++;
@@ -281,9 +300,13 @@ public class ObtenerDatos {
                      }
                       
         }while(flag==false);
+        
+        
         System.out.println(dni);
         System.out.println(nombre);
         System.out.println(apellidos);
+        
+        //Separo los apellidos para introducirlos por separado en el objeto Usuario
         separados = apellidos.split(" ");
         System.out.println(separados[0]);
         System.out.println(separados[1]);
