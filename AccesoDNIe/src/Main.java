@@ -14,8 +14,11 @@ import java.nio.charset.StandardCharsets;
 /**
  * Aplicaciones Telemáticas para la Administración
  * 
- * Este programa debe leer el nombre y NIF de un usuario del DNIe, formar el identificador de usuario y autenticarse con un servidor remoto a través de HTTP 
- * @author Juan Carlos Cuevas Martínez
+ * Este programa debe leer el nombre y NIF de un usuario del DNIe, formar el 
+ * identificador de usuario y autenticarse con un servidor remoto a través de 
+ * HTTP 
+ * @author Juan Carlos Cuevas Martínez, Pablo Castillo Segura y Antonio José 
+ * León Sánchez
  */
 public class Main {
     
@@ -24,7 +27,8 @@ public class Main {
                                             "Error de conexión.", "Error en la url."};
     
     /**
-     * Método principal, que recoge los métodos de leer DNI, realizar petición al servidor, y mostrar resultado
+     * Método principal, que recoge los métodos de leer DNI, realizar petición 
+     * al servidor, y mostrar resultado
      * 
      * @param direccion Dirección IP y puerto del servidor donde autenticarse
      * @return Cadena en función del resultado del servidor
@@ -76,14 +80,17 @@ public class Main {
      * Método para realizar la petición al servidor donde autenticarse
      * 
      * @param ip IP:puerto del servidor
-     * @param user Nombre de usuario con la cadena en el formato definido para los usuarios
+     * @param user Nombre de usuario con la cadena en el formato definido para 
+     * los usuarios
      * @param clave DNI
      * 
-     * @return Mensaje en función de si hay fallos o no en la conexión bien
+     * @return Mensaje en función de si hay fallos o no en la conexión
      * 
      * @throws MalformedURLException Recoge la excepción de montar mal la URL
-     * @throws ProtocolException Recoge la excepción de algún error en el protocolo de comunicación
-     * @throws IOException Recoge excepción de fallos al escribir o leer de la conexión
+     * @throws ProtocolException Recoge la excepción de algún error en el 
+     * protocolo de comunicación
+     * @throws IOException Recoge excepción de fallos al escribir o leer de 
+     * la conexión
      */
     public static String peticion(String ip,String user, String clave) throws MalformedURLException, ProtocolException, IOException{
         String inputline= "";

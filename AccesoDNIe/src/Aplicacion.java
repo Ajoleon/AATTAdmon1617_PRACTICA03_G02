@@ -3,14 +3,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
- *
+ * Interfaz de usuario para la aplicación cliente
+ * 
  * @author Pablo Castillo Segura y Antonio José León Sánchez
  */
 public class Aplicacion extends javax.swing.JFrame {
@@ -99,7 +95,9 @@ public class Aplicacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
-     * @param args the command line arguments
+     * Programa principal de la aplicación
+     * 
+     * @param args Argumentos de la aplicación por línea de comandos
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

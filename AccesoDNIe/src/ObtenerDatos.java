@@ -10,7 +10,8 @@ import javax.smartcardio.*;
  * La clase ObtenerDatos implementa cuatro métodos públicos que permiten obtener
  * determinados datos de los certificados de tarjetas DNIe, Izenpe y Ona.
  * 
- * @author tbc
+ * @author Juan Carlos Cuevas Martínez, Pablo Castillo Segura y Antonio José 
+ * León Sánchez
  */
 public class ObtenerDatos {
 
@@ -61,6 +62,16 @@ public class ObtenerDatos {
         return user;
     }
 
+    /**
+     * Método para leer el certificado del Dnie
+     * 
+     * @param ch Indica el canal de envío de información hacia la tarjeta
+     * @return bytes de datos a transmitir
+     * @throws CardException Excepción al transmitir por el canal los comandos 
+     * hacia el DNIe
+     * @throws CertificateException Excepción que impide el uso del certificado 
+     * del DNIe
+     */
     public byte[] leerCertificado(CardChannel ch) throws CardException, CertificateException {
 
 
@@ -314,9 +325,10 @@ public class ObtenerDatos {
        return user;
     }
     /**
+     * Método para leer datos de ASN1
      * 
-     * @param datos
-     * @return 
+     * @param datos bytes de datos
+     * @return Usuario del 
      */
     private Usuario leerDatosUsuarioASN1(byte[] datos){
         //

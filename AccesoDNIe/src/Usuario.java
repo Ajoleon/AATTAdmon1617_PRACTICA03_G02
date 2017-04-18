@@ -34,9 +34,11 @@ public class Usuario {
         return nombre+" "+apellido1+" "+apellido2+" "+nif;
     }
 
-    /*
-        Método para obtener el nombre de un objeto de la clase Usuario
-    */
+    /**
+     * Método para obtener el nombre de un objeto de la clase Usuario
+     * 
+     * @return Cadena con el nombre de usuario
+     */
     public String getNombre() {
         return nombre;
     }
@@ -49,12 +51,15 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    /*
-        Método para obtener el primer apellido de un objeto de la clase Usuario
-    */
+    /**
+     * Método para obtener el primer apellido de un objeto de la clase Usuario
+     * 
+     * @return Cadena con el primer apellido del usuario
+     */
     public String getApellido1() {
         return apellido1;
     }
+    
     /**
      * Método para establecer un nombre a un objeto de la clase usuario
      * 
@@ -64,12 +69,15 @@ public class Usuario {
         this.apellido1 = apellido1;
     }
 
-    /*
-        Método para obtener el segundo apellido de un objeto de la clase Usuario
-    */
+    /**
+     * Método para obtener el segundo apellido de un objeto de la clase Usuario
+     * 
+     * @return Cadena con el segundo apellido del usuario
+     */
     public String getApellido2() {
         return apellido2;
     }
+    
     /**
      * Método para establecer un nombre a un objeto de la clase usuario
      * 
@@ -79,12 +87,15 @@ public class Usuario {
         this.apellido2 = apellido2;
     }
 
-    /*
-        Método para obtener el DNI de un objeto de la clase Usuario
-    */
+    /**
+     * Método para obtener el DNI de un objeto de la clase Usuario
+     * 
+     * @return Cadena con el dni del usuario
+     */
     public String getNif() {
         return nif;
     }
+    
     /**
      * Método para establecer un nombre a un objeto de la clase usuario
      * 
