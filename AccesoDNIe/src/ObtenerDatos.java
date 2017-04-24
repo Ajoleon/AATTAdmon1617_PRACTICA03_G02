@@ -88,7 +88,7 @@ public class ObtenerDatos {
         }
 
         //[2] PRÁCTICA 3. Punto 1.a
-        // Comando SELECT, selecciona fichero por  id. Longitud 2 bytes. 
+        // Comando SELECT, selecciona fichero por  id, en concreto el 5015. Longitud 2 bytes. 
         command = new byte[]{(byte) 0x00, (byte) 0xA4, (byte) 0x00, (byte) 0x00, (byte) 0x02, (byte) 0x50, (byte) 0x15};
         r = ch.transmit(new CommandAPDU(command));
 
@@ -98,7 +98,7 @@ public class ObtenerDatos {
         }
 
         //[3] PRÁCTICA 3. Punto 1.a
-        // Igual que el anterior. 
+        // Igual que el anterior, seleccionando archivo 6004. 
         command = new byte[]{(byte) 0x00, (byte) 0xA4, (byte) 0x00, (byte) 0x00, (byte) 0x02, (byte) 0x60, (byte) 0x04};
         r = ch.transmit(new CommandAPDU(command));
 
@@ -331,7 +331,7 @@ public class ObtenerDatos {
      * @return Usuario del 
      */
     private Usuario leerDatosUsuarioASN1(byte[] datos){
-        //
         return null;
     }
+   
 }
