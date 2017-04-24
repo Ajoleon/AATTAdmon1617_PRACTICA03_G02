@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<title>Práctica 3</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+</style>
+<body>
+
+<!-- Navbar -->
+<!-- Sidebar -->
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" style="z-index:3;width:250px;margin-top:43px;" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4 class="w3-bar-item"><b>Menu</b></h4>
+  <a class="w3-bar-item w3-button w3-hover-black" href="#1">Funcionamiento del DNIe.</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="#2">La Aplicación.</a>
+
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+<div class="w3-main" style="margin-left:250px">
+
+  <div class="w3-row w3-padding-64" id=1>
+    <div class="w3-twothird w3-container">
+      <h1 class="w3-text-teal">Funcionamiento del DNIe.</h1>
+      <p>El DNI Electrónico, desde su versión 2.0, contiene en su chip una serie de certificados digitales. Con estos certificados es posible, tanto la identificación legalmente valida como la firma electrónica de documentos. En esta aplicación se hará uso del certificado de Autenticación.</p>
+      <p> En el certificado de Autenticación se pueden encontrar los datos del usuario, tal como nombre, apellidos, dni, etc. Se usará nombre, apellidos y dni para realizar la autenticación.  </p>
+      <p><img src="img/3.png" width=250px hegiht= 200px/><img src="img/4.png" width=250px hegiht= 200px/></p>
+    </div>
+  
+  </div>
+
+  <div class="w3-row" id =2>
+    <div class="w3-twothird w3-container">
+      <h1 class="w3-text-teal">La Aplicación.</h1>
+      <p>La aplicación consiste en un sencillo cliente que realizará una autenticación frente a un servidor, en base a los datos del DNIe del usuario. Por tanto es necesario tanto el DNIe como un Lector de tarjetas inteligentes, sin ellos, la aplicación no funcionará. Para iniciar la autenticación, se inicia la aplicación una vez se haya conectado el lector con el DNIe. En la pantalla principal, se podrá cambiar la dirección IP del servidor en el que realizar al autenticación. Si es correcta, podrá iniciarse. En caso contrario, si se inicia, la aplicación nos avisará si es erronea o ha habido un problema de conexión. Si todo es correcto, la aplicación nos devolverá un mensaje en función de si nuestro usuario existe en la base de datos del servidor elegido, o no. </p>
+      <p><img src="img/1.png" width=300px hegiht= 200px/><img src="img/2.png"width=250px hegiht= 200px/></p>
+    </div>
+  
+  </div>
+
+
+
+  <!-- Pagination -->
+
+
+  <footer id="myFooter">
+    <div class="w3-container w3-theme-l2 w3-padding-32">
+      <h4>Antonio José León Sánchez - Pablo Castillo Segura</h4>
+    </div>
+
+    <div class="w3-container w3-theme-l1">
+      <p>Aplicaciones Telemáticas para la Administración. Grado en Ingenieria Telemática. Universidad  de Jaén.</p>
+    </div>
+  </footer>
+
+<!-- END MAIN -->
+</div>
+
+<script>
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+    if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+        overlayBg.style.display = "none";
+    } else {
+        mySidebar.style.display = 'block';
+        overlayBg.style.display = "block";
+    }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+    mySidebar.style.display = "none";
+    overlayBg.style.display = "none";
+}
+</script>
+
+</body>
+</html>
